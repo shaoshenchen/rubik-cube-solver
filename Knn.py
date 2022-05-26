@@ -2,6 +2,7 @@ import numpy as np
 import math
 import cv2
 from scipy import stats
+from collections import Counter
 
 '''This script Loads the Training Dataset and then performs k-Nearest-Neighbouring algorithm on the provided dataset.
 the Colour_detection.py sends the features (max hue and sat from theor respective histograms) of the 9 pixels of the cube
@@ -31,19 +32,24 @@ X[..., 1] = X2
 
 def hashmap(color):
   return {
-    'o': '橙色',
-    'w': '白色',
-    'p': '粉色',
-    'y': '黄色',
-    'g': '绿色',
-    'b': '蓝色'
+    'o': "\033[7;31;43m橙\033[0m",
+    'w': "\033[1;30;47m白\033[0m",
+    'p': "\033[1;10;45m粉\033[0m",
+    'y': "\033[1;30;43m黄\033[0m",
+    'g': "\033[1;40;42m绿\033[0m",
+    'b': "\033[1;40;44m蓝\033[0m"
   }[color]
 
 def predict_colour(feature_Mat):
     final_prediction_seq = np.empty(9, dtype=str)
     for i, feature in enumerate(feature_Mat):
         final_prediction_seq[i] = str (predict_single_face_colour(feature))
-    print(list(map(hashmap, final_prediction_seq)))
+    color_list = list(map(hashmap, final_prediction_seq))
+    color_list = list(map(hashmap, final_prediction_seq))
+    for i in range(9):
+        print(color_list[i], end='  ')
+        if (i+1) % 3 == 0:
+            print('\n')
 
 def predict_single_face_colour(features):
     closest_dist = np.zeros((540))

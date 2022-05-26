@@ -1,6 +1,7 @@
 import cv2
 import numpy as np
 import Knn
+import time
 
 '''
 Detects the Colour of each pixel in runtime. 
@@ -17,7 +18,7 @@ Faces = np.array(([np.zeros((55, 60, 3)), np.zeros((55, 60, 3)), np.zeros((55, 6
                    np.zeros((55, 60, 3)), np.zeros((55, 60, 3)), np.zeros((55, 60, 3)),
                    np.zeros((45, 55, 3)), np.zeros((45, 50, 3)), np.zeros((45, 50, 3))]), dtype=object)
 
-cap = cv2.VideoCapture(1)
+cap = cv2.VideoCapture(0)
 
 
 def detect_colour(Faces):
@@ -48,6 +49,8 @@ while (True):
 
     detect_colour(Faces)
     cv2.imshow("img", frame)
+
+    time.sleep(0.1)
 
     if (cv2.waitKey(1) == 27):
         break
